@@ -1,17 +1,17 @@
-# This is a sample build configuration for PHP.
-# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-image: multisoft/php7.0.25-cli
+#build this file into your local environment as local/bitbucket image to test dbitbucket-pipelines.yml
+FROM php:7.0.25-cli
 
-pipelines:
-  default:
-    - step:
-        caches:
-          - composer
-        script:
-          - apt-get update && apt-get install -y unzip
-          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          - composer install
-          - vendor/bin/phpunit
+RUN apt-get update && \
+    apt-get install -y \
+    libz-dev \
+    libbz2-dev \
+    libxml2-dev \
+    libpng-dev \
+    libc-client-dev \
+    libkrb5-dev \
+    curl \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install pdo_mysql mysqli zip bz2 dom gd imap \
+    && apt-get clean
+# Source the bash
+RUN . ~/.bashrc
