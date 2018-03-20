@@ -1,5 +1,5 @@
 #build this file into your local environment as local/bitbucket image to test dbitbucket-pipelines.yml
-FROM php:7.0.25-cli
+FROM php:7.1.13-cli
 
 RUN apt-get update && \
     apt-get install -y \
